@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moh-OS | Ultimate Developer & Creative Distro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        :root {
+            --primary: #6e2bff;
+            --primary-dark: #4a1bb3;
+            --secondary: #ff2d75;
+            --accent: #00e1ff;
+            --dark: #0f0a1f;
+            --light: #f8f9ff;
+            --glass: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(110, 43, 255, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 45, 117, 0.15) 0%, transparent 20%);
+        }
+        
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        /* Animated gradient background for header */
+        header {
+            position: relative;
+            padding: 2rem 0 6rem;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            z-index: -2;
+        }
+        
+        .header-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
+            z-index: -1;
+        }
+        
+        .logo {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+             .logo-symbol {
+                   width: 80px;
+                 height: 80px;
+              border-radius: 20px;
+              object-fit: contain; 
+              background: none;
+                    }
+        
+        .logo-inner {
+            width: 100%;
+            height: 100%;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            border: 2px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.5s ease;
+        }
+        
+        .logo-inner:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-symbol {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo-symbol::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0.3) 0%,
+                rgba(255, 255, 255, 0) 60%
+            );
+            transform: rotate(30deg);
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, #d1d1ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+        
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: var(--glass);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .download-btn {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(110, 43, 255, 0.3);
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(110, 43, 255, 0.4);
+        }
+        
+        /* Hero section */
+        .hero {
+            max-width: 1200px;
+            margin: -4rem auto 5rem;
+            padding: 0 2rem;
+            position: relative;
+        }
+        
+        .hero-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            padding: 3rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.5s ease;
+        }
+        
+        .hero-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, #d1d1ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .primary-btn {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(110, 43, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(110, 43, 255, 0.4);
+        }
+        
+        .secondary-btn {
+            background: transparent;
+            color: var(--light);
+            border: 2px solid var(--glass-border);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .secondary-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        /* Features section */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+        
+        .features {
+            max-width: 1200px;
+            margin: 0 auto 5rem;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid var(--glass-border);
+            padding: 2rem;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0) 60%
+            );
+            pointer-events: none;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+        
+        /* Apps showcase */
+        .apps-showcase {
+            max-width: 1200px;
+            margin: 0 auto 5rem;
+            padding: 0 2rem;
+        }
+        
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .app-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .app-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--accent);
+        }
+        
+        .app-card img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+        
+        .app-card p {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        /* Screenshots section */
+        .screenshots {
+            max-width: 1200px;
+            margin: 0 auto 5rem;
+            padding: 0 2rem;
+        }
+        
+        .screenshot-gallery {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+            scroll-snap-type: x mandatory;
+        }
+        
+        .screenshot-gallery::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .screenshot-gallery::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .screenshot-gallery::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+        }
+        
+        .screenshot {
+            min-width: 80%;
+            scroll-snap-align: start;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        
+        .screenshot:hover {
+            transform: scale(1.02);
+        }
+        
+        .screenshot img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .screenshot-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+            text-align: center;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(to bottom, transparent, rgba(110, 43, 255, 0.1));
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            opacity: 0.7;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero-card {
+                padding: 2rem 1rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .screenshot {
+                min-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+       <div class="logo">
+       <div class="logo-inner">
+        <img src="images/mohos.png" alt="Moh-OS Logo" class="logo-symbol">
+        </div>
+       </div>
+        <h1>Moh-OS</h1>
+        <p class="tagline">The Ultimate Debian-based Distro for Competitive Programming & Creative Work</p>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#apps">Applications</a>
+                <a href="#screenshots">Screenshots</a>
+                <a href="#download">Download</a>
+                <a href="#community">Community</a>
+            </div>
+            <button class="download-btn">
+                <i class="fas fa-download"></i> Download
+            </button>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <div class="hero-card">
+            <h2>Everything You Need in One Distro</h2>
+            <p>Moh-OS combines the power of Debian with carefully curated tools for developers, competitive programmers, and digital creators. Choose between GNOME and KDE Plasma desktops, both optimized for performance and aesthetics.</p>
+            <div class="cta-buttons">
+                <button class="primary-btn">
+                    <i class="fas fa-download"></i> Download Now
+                </button>
+                <button class="secondary-btn">
+                    <i class="fas fa-book"></i> Documentation
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <section id="features" class="features-section">
+        <h2 class="section-title">Key Features</h2>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-desktop"></i>
+                </div>
+                <h3>Dual Desktop Environments</h3>
+                <p>Enjoy both GNOME and KDE Plasma, meticulously configured for optimal workflow and visual appeal. Switch between them at login.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3>Competitive Programming Ready</h3>
+                <p>Pre-installed with VS Code, PyCharm, Vim, Neovim, and compilers for C++, C, Python, and Pascal. Start coding immediately.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+                <h3>Creative Suite</h3>
+                <p>DaVinci Resolve for video editing, Krita for digital painting, and GIMP for photo manipulation - all configured and ready.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3>Gaming & Streaming</h3>
+                <p>Steam with Proton support for gaming and OBS Studio pre-configured for streaming and recording your sessions.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <h3>Browser Choice</h3>
+                <p>Brave for privacy, Chrome for compatibility, and Firefox for customization - all updated and ready to use.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h3>Optimized Performance</h3>
+                <p>Carefully tuned for responsiveness with essential drivers pre-installed for both Intel/AMD and NVIDIA hardware.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="apps" class="apps-showcase">
+        <h2 class="section-title">Pre-installed Applications</h2>
+        <div class="apps-grid">
+            <!-- Programming Tools -->
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg" alt="VS Code">
+                </div>
+                <p>VS Code</p>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/PyCharm_Icon.svg" alt="PyCharm">
+                </div>
+                <p>PyCharm</p>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Vimlogo.svg" alt="Vim">
+                </div>
+                <p>Vim</p>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Neovim-logo.svg" alt="Neovim">
+                </div>
+                <p>Neovim</p>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Brave_Browser_Logo.png" alt="Brave">
+                </div>
+                <p>Brave</p>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" alt="Chrome">
+                </div>
+                <p>Chrome</p>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" alt="Firefox">
+                </div>
+                <p>Firefox</p>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/90/DaVinci_Resolve_17_logo.svg" alt="DaVinci Resolve">
+                </div>
+                <p>DaVinci Resolve</p>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/73/Calligrakrita-base.svg" alt="Krita">
+                </div>
+                <p>Krita</p>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/The_GIMP_icon_-_gnome.svg" alt="GIMP">
+                </div>
+                <p>GIMP</p>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="Steam">
+                </div>
+                <p>Steam</p>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/OBS_Studio_Logo.png" alt="OBS Studio">
+                </div>
+                <p>OBS Studio</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="screenshots" class="screenshots">
+        <h2 class="section-title">Screenshots</h2>
+        <div class="screenshot-gallery">
+            <div class="screenshot">
+                <img src="https://via.placeholder.com/1920x1080/4a1bb3/ffffff?text=GNOME+Desktop" alt="GNOME Desktop">
+                <div class="screenshot-caption">GNOME Desktop Environment</div>
+            </div>
+            <div class="screenshot">
+                <img src="https://via.placeholder.com/1920x1080/6e2bff/ffffff?text=KDE+Plasma" alt="KDE Plasma">
+                <div class="screenshot-caption">KDE Plasma Desktop</div>
+            </div>
+            <div class="screenshot">
+                <img src="https://via.placeholder.com/1920x1080/ff2d75/ffffff?text=VS+Code+with+C%2B%2B" alt="VS Code">
+                <div class="screenshot-caption">VS Code with C++</div>
+            </div>
+            <div class="screenshot">
+                <img src="https://via.placeholder.com/1920x1080/00e1ff/0f0a1f?text=DaVinci+Resolve" alt="DaVinci Resolve">
+                <div class="screenshot-caption">DaVinci Resolve</div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <div class="logo-inner" style="width: 80px; height: 80px;">
+                    <div class="logo-symbol" style="width: 50px; height: 50px;"></div>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <a href="#features">Features</a>
+                <a href="#apps">Applications</a>
+                <a href="#download">Download</a>
+                <a href="#documentation">Documentation</a>
+                <a href="#community">Community</a>
+                <a href="#blog">Blog</a>
+                <a href="#contact">Contact</a>
+            </div>
+            
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-reddit"></i></a>
+            </div>
+            
+            <p class="copyright">© 2023 Moh-OS Project. Based on Debian GNU/Linux.</p>
+        </div>
+    </footer>
+</body>
+</html>
